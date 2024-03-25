@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-k02tg*tp2a9sa(1hvl_fmv2ze@k76^-xd0s!w241md#i%8_%=q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://sudoku-solver-backend-g7mab3cf2-benab04s-projects.vercel.app/']
 
 
 # Application definition
@@ -128,7 +128,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = True
 
 CSRF_TRUSTED_ORIGINS = [
-        'https://l7pw3g.csb.app',
+        'http://localhost:3000',
 ]
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760
