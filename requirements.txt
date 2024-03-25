@@ -4,7 +4,7 @@ astunparse==1.6.3
 certifi==2024.2.2
 charset-normalizer==3.3.2
 contourpy==1.2.0
-cplex==22.1.1.1
+cplex==22.1.1.0
 cycler==0.12.1
 Django==5.0.3
 django-cors-headers==4.3.1
