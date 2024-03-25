@@ -128,7 +128,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = True
 
 CSRF_TRUSTED_ORIGINS = [
-        'https://sudoku-solver-benab04.netlify.app/',
+        'https://sudoku-solver-benab04.netlify.app',
 ]
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760
