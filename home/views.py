@@ -102,7 +102,7 @@ def home(request):
             
             sudoku_cell_croped= CropCell(sudoku_cell)
             
-            model = load_model('model/model5.h5')
+            model = load_model('model/model6.h5')
             sudoku_cell_croped = CropCell(sudoku_cell)
             sudoku_grid = np.zeros((9, 9), dtype=int)
             
