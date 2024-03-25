@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
@@ -6,8 +5,6 @@ import numpy as np
 import base64
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import os, random
 import cv2
 from keras.models import load_model
 from PIL import Image
