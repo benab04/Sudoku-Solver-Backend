@@ -192,49 +192,49 @@ def solve(request):
                 print("No solution found.")
                 
                 
-            def sudoku_to_image(sudoku_array, sudoku_grid):
-                image = np.ones((454, 454, 3)) * 255  # White background with outer border
+            # def sudoku_to_image(sudoku_array, sudoku_grid):
+            #     image = np.ones((454, 454, 3)) * 255  # White background with outer border
 
-                # Define the dimensions of each cell and the grid thickness
-                cell_size = 50
-                grid_thickness = 2
-                outer_border_thickness = 4  # Thickness of the outer border
+            #     # Define the dimensions of each cell and the grid thickness
+            #     cell_size = 50
+            #     grid_thickness = 2
+            #     outer_border_thickness = 4  # Thickness of the outer border
 
-                # Draw outer border
-                cv2.rectangle(image, (0, 0), (453, 453), (0, 0, 0), outer_border_thickness)
+            #     # Draw outer border
+            #     cv2.rectangle(image, (0, 0), (453, 453), (0, 0, 0), outer_border_thickness)
                 
-                for i in range(9):
-                    for j in range(9):
-                        # Get the value of the cell
-                        cell_value = sudoku_array[i][j]
+            #     for i in range(9):
+            #         for j in range(9):
+            #             # Get the value of the cell
+            #             cell_value = sudoku_array[i][j]
 
-                        # If the cell value is not zero, write it on the image
-                        if cell_value != 0:
-                            # Calculate the position to write the cell value
-                            x_pos = j * cell_size + 17
-                            y_pos = i * cell_size + 35
+            #             # If the cell value is not zero, write it on the image
+            #             if cell_value != 0:
+            #                 # Calculate the position to write the cell value
+            #                 x_pos = j * cell_size + 17
+            #                 y_pos = i * cell_size + 35
 
-                            # Determine the color based on sudoku_grid
-                            if sudoku_grid[i][j] == cell_value:
-                                color = (0, 0, 255)  # Red color for correct cells
-                            else:
-                                color = (0, 0, 0)  # Black color for incorrect cells
+            #                 # Determine the color based on sudoku_grid
+            #                 if sudoku_grid[i][j] == cell_value:
+            #                     color = (0, 0, 255)  # Red color for correct cells
+            #                 else:
+            #                     color = (0, 0, 0)  # Black color for incorrect cells
 
-                            # Write the cell value on the image
-                            cv2.putText(image, str(cell_value), (x_pos, y_pos), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1.5, color, 2)
+            #                 # Write the cell value on the image
+            #                 cv2.putText(image, str(cell_value), (x_pos, y_pos), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1.5, color, 2)
                             
-                for i in range(1, 9):
-                    if i % 3 == 0:
-                        thickness = 2 * grid_thickness
-                    else:
-                        thickness = grid_thickness
+            #     for i in range(1, 9):
+            #         if i % 3 == 0:
+            #             thickness = 2 * grid_thickness
+            #         else:
+            #             thickness = grid_thickness
 
-                    # Draw horizontal grid lines
-                    cv2.line(image, (0, i * cell_size), (453, i * cell_size), (0, 0, 0), thickness)
-                    # Draw vertical grid lines
-                    cv2.line(image, (i * cell_size, 0), (i * cell_size, 453), (0, 0, 0), thickness)
+            #         # Draw horizontal grid lines
+            #         cv2.line(image, (0, i * cell_size), (453, i * cell_size), (0, 0, 0), thickness)
+            #         # Draw vertical grid lines
+            #         cv2.line(image, (i * cell_size, 0), (i * cell_size, 453), (0, 0, 0), thickness)
 
-                return image
+            #     return image
             
             sudoku_array =solved_sudoku_array
             hints_grid = sudoku_grid
@@ -248,7 +248,6 @@ def solve(request):
             if(solution):
                 return JsonResponse({"solved": json.dumps(sudoku_array.tolist())})
             else:
-                return JsonResponse({"error": "No solution found"}, status=500)
+                return JsonResponse({"error": "No solution found. Try checking the values again"}, status=204)
         except Exception as e:
-            print(e)
-            return JsonResponse({"error": str(e)}, status=500)
+            return JsonResponse({"error": "No solution found. Try checking the values again"}, status=204)
