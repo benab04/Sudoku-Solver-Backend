@@ -12,7 +12,7 @@ from docplex.cp.model import CpoModel
 
 # Create your views here.
 @csrf_exempt
-def home(request):
+def extract(request):
     if request.method == "POST":
         data = json.loads(request.body)
         image_data_url = data.get("imageDataURL")
@@ -135,10 +135,29 @@ def home(request):
             print(sudoku_grid)
             
             
-            N = 9
+            
             
             initial_sudoku = sudoku_grid
             
+            return JsonResponse({"Unsolved":json.dumps(initial_sudoku.tolist())})
+                
+            
+
+        except Exception as e:
+            print(e)
+            return JsonResponse({"error": str(e)}, status=500)
+
+    else:
+        return JsonResponse({"error": "Only POST requests are allowed"}, status=405)
+
+@csrf_exempt
+def solve(request):
+    if request.method=="POST":
+        data = json.loads(request.body)
+        initial_sudoku = data.get("grid")
+        try:
+            sudoku_grid=initial_sudoku
+            N = 9
             model = CpoModel()
             X = [[model.integer_var(1, N, f"X[{i+1}][{j+1}]") for j in range(N)] for i in range(N)]
             
@@ -171,6 +190,7 @@ def home(request):
                 print(solved_sudoku_array)
             else:
                 print("No solution found.")
+                
                 
             def sudoku_to_image(sudoku_array, sudoku_grid):
                 image = np.ones((454, 454, 3)) * 255  # White background with outer border
@@ -218,21 +238,17 @@ def home(request):
             
             sudoku_array =solved_sudoku_array
             hints_grid = sudoku_grid
-            sudoku_image = sudoku_to_image(sudoku_array, hints_grid)
+            # sudoku_image = sudoku_to_image(sudoku_array, hints_grid)
             
-            _, buffer = cv2.imencode('.png', sudoku_image)
-            # Encode the bytes to Base64
-            encoded_image = base64.b64encode(buffer).decode('utf-8')
+            # _, buffer = cv2.imencode('.png', sudoku_image)
+            # encoded_image = base64.b64encode(buffer).decode('utf-8')
    
             # Check if the image was saved successfully
             # if os.path.exists(image_path):
             if(solution):
-                return JsonResponse({"solved": encoded_image})
+                return JsonResponse({"solved": json.dumps(sudoku_array.tolist())})
             else:
                 return JsonResponse({"error": "No solution found"}, status=500)
-
         except Exception as e:
+            print(e)
             return JsonResponse({"error": str(e)}, status=500)
-
-    else:
-        return JsonResponse({"error": "Only POST requests are allowed"}, status=405)
