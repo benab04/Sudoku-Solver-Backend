@@ -190,6 +190,10 @@ def solve_logic(initial_sudoku):
             return solution,X
 
 # Create your views here.
+
+def home(request):
+    return JsonResponse({"message":"Server booted"}, status=200)
+
 @csrf_exempt
 def extract(request):
     if request.method == "POST":

@@ -19,6 +19,7 @@ from django.urls import path
 from home.views import * 
 
 urlpatterns = [
+    path("", home),
     path("extract/", extract),
     path("solve/", solve),
     path("admin/", admin.site.urls),
