@@ -90,7 +90,9 @@ def extract_logic(image_data_url):
                 su_matrix = cv2.getPerspectiveTransform(su_pts1,su_pts2)
                 su_imagewrap = cv2.warpPerspective(su_puzzle,su_matrix,(450,450))
                 su_imagewrap =cv2.cvtColor(su_imagewrap, cv2.COLOR_BGR2GRAY)
-            
+                
+            _, buffer_detected = cv2.imencode('.png', su_imagewrap)
+            detected_sudoku_encoded = base64.b64encode(buffer_detected).decode('utf-8')
             sudoku_cell = splitcells(su_imagewrap)
             # for cell_image in sudoku_cell:
             #     cv2.imshow('Cell Image', np.array(cell_image))
@@ -162,7 +164,7 @@ def extract_logic(image_data_url):
             
             
             
-            return sudoku_grid
+            return sudoku_grid,detected_sudoku_encoded
 
 
 def solve_logic(initial_sudoku):
@@ -207,9 +209,9 @@ def extract(request):
         try:
             # Extract image data from the data URL
             
-            initial_sudoku = extract_logic(image_data_url)
+            initial_sudoku , detected_sudoku_encoded= extract_logic(image_data_url)
             
-            return JsonResponse({"Unsolved":json.dumps(initial_sudoku.tolist())})
+            return JsonResponse({"Unsolved":json.dumps(initial_sudoku.tolist()), "Detected_encoded":detected_sudoku_encoded})
                 
             
 
